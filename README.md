@@ -44,18 +44,55 @@ header, where `<token>` is what you get back from the login endpoint.
 
 ## Who's working on what
 
-Each person below should only write code inside the ONE file listed next to
-their name. Follow the numbered comments already in that file, top to
-bottom — they walk you through exactly what to write.
+## Task Assignments
 
-| Student | File to work in | Page | Endpoint(s) it uses |
-|---|---|---|---|
-| **Emeka** | `js/admin-add-exam.js` | admin-add-exam.html | `POST /api/admin/exams` |
-| **Ahmed** | `js/admin-students.js` | admin-students.html | `GET /api/admin/students`, `POST /api/admin/students`, `PUT /api/admin/students/:id`, `DELETE /api/admin/students/:id` |
-| **Osas** | `js/admin-results.js` | admin-results.html | `GET /api/admin/results` |
-| **Leonard** | `js/student-exams.js` | student-exams.html | `GET /api/student/me`, `GET /api/student/exams` |
-| **Okon** | `js/student-login.js` AND `js/admin-login.js` | student-login.html, admin-login.html | `POST /api/student/login`, `POST /api/admin/login` |
+Each person should only write code inside the file(s) listed under their name.
+Follow the numbered comments already in that file, from top to bottom — they
+walk you through exactly what to write.
 
+**Backend base URL:** `https://bethesda-cbt-studet-project.onrender.com`
+
+### Emeka
+
+- **File:** `js/admin-add-exam.js`
+- **Page:** `admin-add-exam.html`
+- **Endpoints:**
+  - `POST /api/admin/exams` — create a new exam with its questions
+  - `GET /api/student/exams/:id` — load one exam's questions to take it
+  - `POST /api/student/exams/:id/submit` — submit answers and get a score
+
+### Ahmed
+
+- **File:** `js/admin-students.js`
+- **Page:** `admin-students.html`
+- **Endpoints:**
+  - `GET /api/admin/students` — list all students
+  - `POST /api/admin/students` — add a student
+  - `PUT /api/admin/students/:id` — edit a student
+  - `DELETE /api/admin/students/:id` — delete a student
+
+### Osas
+
+- **File:** `js/admin-results.js`
+- **Page:** `admin-results.html`
+- **Endpoints:**
+  - `GET /api/admin/results` — view all submitted results
+
+### Leonard
+
+- **File:** `js/student-exams.js`
+- **Page:** `student-exams.html`
+- **Endpoints:**
+  - `GET /api/student/me` — get the logged-in student's own info
+  - `GET /api/student/exams` — list exams available to their class
+
+### Okon
+
+- **File:** `js/student-exam.js`
+- **Page:** `student-exam.html`
+- **Endpoints:**
+  - `POST /api/admin/login` — admin login
+  - `POST /api/student/login` — student login
 ### Notes for everyone
 
 - Don't edit any `.html` files or `js/config.js` — those are already set up.
