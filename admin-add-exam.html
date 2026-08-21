@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Add Exam — CBT App</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<main id="main" class="container">
+  <p><a href="admin-dashboard.html">Back to dashboard</a></p>
+  <h1>Add New Exam</h1>
+
+  <form id="examForm" novalidate>
+    <label for="title">Exam Title</label>
+    <input type="text" id="title" required placeholder="e.g. First Term Test">
+
+    <label for="subject">Subject</label>
+    <input type="text" id="subject" required placeholder="e.g. English Language">
+
+    <label for="examClass">Class</label>
+    <input type="text" id="examClass" required placeholder="e.g. JSS1">
+
+    <label for="durationMinutes">Duration (minutes)</label>
+    <input type="number" id="durationMinutes" required min="1" placeholder="e.g. 30">
+
+    <div id="questionsContainer">
+      <!-- Question blocks are added here by JavaScript -->
+    </div>
+
+    <button type="button" id="addQuestionBtn" class="secondary">Add Another Question</button>
+
+    <div>
+      <button type="submit">Save Exam</button>
+    </div>
+  </form>
+
+  <div id="formMessage" role="alert" aria-live="polite"></div>
+</main>
+
+<template id="questionTemplate">
+  <fieldset class="question-block">
+    <legend>Question <span class="qNumber"></span></legend>
+
+    <button type="button" class="secondary removeQuestionBtn">Remove This Question</button>
+
+    <label>Passage (optional — leave blank if there is no reading passage)</label>
+    <textarea class="passageField"></textarea>
+
+    <label>Question Text</label>
+    <textarea class="questionTextField" required></textarea>
+
+    <fieldset>
+      <legend>Options (mark the correct one with the radio button next to it)</legend>
+      <div class="optionsContainer"></div>
+      <button type="button" class="secondary addOptionBtn">Add Another Option</button>
+    </fieldset>
+  </fieldset>
+</template>
+
+<template id="optionRowTemplate">
+  <div class="option-row optionRow">
+    <input type="radio" class="answerRadio">
+    <label class="optionLabel" style="margin-top:0;font-weight:normal;">Option</label>
+    <input type="text" class="optionField" placeholder="Option text">
+    <button type="button" class="secondary removeOptionBtn">Remove</button>
+  </div>
+</template>
+
+<script src="js/config.js"></script>
+<script src="js/admin-add-exam.js"></script>
+</body>
+</html>

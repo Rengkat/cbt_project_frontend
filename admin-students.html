@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Manage Students — CBT App</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<main id="main" class="container">
+  <p><a href="admin-dashboard.html">Back to dashboard</a></p>
+  <h1>Manage Students</h1>
+
+  <!-- Add / Edit form. Same form is reused: when editing, it fills with the student's data -->
+  <form id="studentForm" novalidate>
+    <input type="hidden" id="studentId" value="">
+
+    <h2 id="formTitle">Add New Student</h2>
+
+    <label for="fullName">Full Name</label>
+    <input type="text" id="fullName" required>
+
+    <label for="regNumber">Registration Number (used as login username)</label>
+    <input type="text" id="regNumber" required>
+
+    <label for="studentClass">Class</label>
+    <input type="text" id="studentClass" required placeholder="e.g. JSS1">
+
+    <label for="password">Password <span id="passwordHint">(required for new student, leave blank to keep unchanged when editing)</span></label>
+    <input type="password" id="password" autocomplete="new-password">
+
+    <button type="submit" id="submitBtn">Add Student</button>
+    <button type="button" id="cancelEditBtn" class="secondary" hidden>Cancel Edit</button>
+  </form>
+
+  <div id="formMessage" role="alert" aria-live="polite"></div>
+
+  <h2>Existing Students</h2>
+  <div id="studentList" aria-live="polite">Loading students...</div>
+</main>
+
+<script src="js/config.js"></script>
+<script src="js/admin-students.js"></script>
+</body>
+</html>

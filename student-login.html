@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Student Login — CBT App</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<main id="main" class="container">
+  <h1>Student Login</h1>
+
+  <form id="loginForm" novalidate>
+    <label for="regNumber">Registration Number</label>
+    <input type="text" id="regNumber" required autocomplete="username">
+
+    <label for="password">Password</label>
+    <input type="password" id="password" required autocomplete="current-password">
+
+    <button type="submit">Log In</button>
+  </form>
+
+  <div id="formMessage" role="alert" aria-live="polite"></div>
+
+  <p><a href="index.html">Back to home</a></p>
+</main>
+
+<script src="js/config.js"></script>
+<script src="js/student-login.js"></script>
+</body>
+</html>

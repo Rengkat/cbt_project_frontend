@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Take Exam — CBT App</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<main id="main" class="container">
+  <div id="loadingMsg" aria-live="polite">Loading exam...</div>
+
+  <div id="examArea" hidden>
+    <h1 id="examTitle"></h1>
+    <p id="examMeta"></p>
+    <p>Answer every question, then use the Submit Exam button at the end. Each question is a separate section with its own set of options — use your screen reader's heading navigation (H key) to move between questions.</p>
+
+    <p><strong>Time remaining: <span id="timerDisplay">--:--</span></strong></p>
+    <div id="timerAnnouncement" role="alert" aria-live="assertive" class="message"></div>
+
+    <form id="examForm">
+      <div id="questionsArea"></div>
+
+      <div id="submitMessage" role="alert" aria-live="polite"></div>
+      <button type="submit">Submit Exam</button>
+    </form>
+  </div>
+
+  <div id="resultArea" hidden aria-live="polite">
+    <h1>Exam Submitted</h1>
+    <p id="scoreText"></p>
+    <p><a href="student-exams.html">Back to my exams</a></p>
+  </div>
+</main>
+
+<script src="js/config.js"></script>
+<script src="js/student-exam.js"></script>
+</body>
+</html>

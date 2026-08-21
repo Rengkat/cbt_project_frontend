@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin Dashboard — CBT App</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<main id="main" class="container">
+  <div class="top-bar">
+    <h1>Admin Dashboard</h1>
+    <button type="button" id="logoutBtn" class="secondary">Log Out</button>
+  </div>
+
+  <nav aria-label="Admin actions">
+    <ul>
+      <li><a href="admin-students.html">Manage Students (add / edit / delete)</a></li>
+      <li><a href="admin-add-exam.html">Add New Exam</a></li>
+      <li><a href="admin-results.html">View Results</a></li>
+    </ul>
+  </nav>
+
+  <div id="formMessage" role="alert" aria-live="polite"></div>
+</main>
+
+<script src="js/config.js"></script>
+<script src="js/admin-dashboard.js"></script>
+</body>
+</html>
