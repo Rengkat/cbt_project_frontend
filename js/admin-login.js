@@ -1,77 +1,90 @@
 // This script runs on the Admin Login page.
 
-// Find the login form and store it in a variable
+// Find the login form and store it in a variable.
 const loginForm = document.getElementById("loginForm");
 
-// Find the message area and store it in a variable
+// Find the message area and store it in a variable.
+
 const formMessage = document.getElementById("formMessage");
 
-// 1. Add a "submit" event listener to loginForm, for when the form is submitted.
-//    The listener function should be declared as "async function (e) { ... }"
-//    so that we can use "await" inside it later.
+// Add a "submit" event listener to the login form.
+loginForm.addEventListener("submit", async function (e) {
+  // Prevent the browser from doing its normal full-page reload.
+  e.preventDefault();
 
-// Inside the event listener function, do the following, IN THIS ORDER:
+  // Clear any old message.
+  formMessage.textContent = "";
+  formMessage.className = "";
 
-// a. Prevent the browser's normal full-page reload on submit
-//    (call e.preventDefault())
+  // Find the username input.
+  const usernameInput = document.getElementById("username");
 
-// b. Clear any old message:
-//    - set formMessage.textContent to an empty string ""
-//    - set formMessage.className to an empty string ""
+  // Read the username and remove extra spaces from the beginning and end.
+  const username = usernameInput.value.trim();
 
-// c. Find the username input using document.getElementById with the id "username"
-//    Store it in a variable called usernameInput
+  // Find the password input.
+  const passwordInput = document.getElementById("password");
 
-// d. Read the value typed into usernameInput (usernameInput.value), remove any
-//    extra whitespace from the start/end using .trim(), and store the result
-//    in a variable called username
+  // Read the password exactly as typed.
+  const password = passwordInput.value;
 
-// e. Find the password input using document.getElementById with the id "password"
-//    Store it in a variable called passwordInput
+  // Check whether username or password is empty.
+  if (!username || !password) {
+    // Display an error message.
+    formMessage.textContent = "Please enter both username and password.";
 
-// f. Read the value typed into passwordInput (passwordInput.value) and store it
-//    in a variable called password
-//    (do NOT trim the password — spaces in a password should be kept exactly as typed)
+    // Give the message the error CSS class.
+    formMessage.className = "message error";
 
-// g. Check whether username is empty OR password is empty
-//    (use: if (!username || !password) )
-//    If either one is missing:
-//      - set formMessage.textContent to "Please enter both username and password."
-//      - set formMessage.className to "message error"
-//      - use "return" to stop the function here — do not continue to step h below
+    // Stop the function here.
+    return;
+  }
 
-// h. Start a try block, because the network request below might fail
-//    (e.g. no internet connection, server not running)
+  // Start a try block because the network request might fail.
+  try {
+    // Send the login information to the server.
+    const response = await fetch("https://bethesda-cbt-studet-project.onrender.com/api/admin/login", {
+      method: "POST",
 
-//    Inside the try block, do the following IN ORDER:
+      // Tell the server that we are sending JSON data.
+      headers: {
+        "Content-Type": "application/json",
+      },
 
-//    i. Use "await fetch(...)" to send a request to the URL "/api/admin/login"
-//       The options object passed to fetch needs:
-//         - method: "POST"
-//         - headers: an object with "Content-Type" set to "application/json"
-//         - body: JSON.stringify() of an object containing username and password
-//       Store what fetch returns in a variable called response
+      // Convert the username and password into JSON.
+      body: JSON.stringify({
+        username: username,
+        password: password,
+      }),
+    });
 
-//    j. Use "await response.json()" to read and parse the response body as JSON
-//       Store the result in a variable called data
+    // Read the server's JSON response.
+    const data = await response.json();
 
-//    k. Check "if (!response.ok)" — this is true when the server responded with
-//       an error status code (like 400)
-//       If so:
-//         - set formMessage.textContent to data.message, or, if data.message is
-//           missing/empty, use the fallback text "Login failed. Please try again."
-//         - set formMessage.className to "message error"
-//         - use "return" to stop the function here — do not continue to step l
+    // Check whether the server returned an error status.
+    if (!response.ok) {
+      // Display the server's message.
+      // If there is no message, use the fallback message.
+      formMessage.textContent =
+        data.message || "Login failed. Please try again.";
 
-//    l. If we reach this point, login succeeded.
-//       Save the token by calling: localStorage.setItem("token", data.token)
+      // Give the message the error CSS class.
+      formMessage.className = "message error";
 
-//    m. Redirect the browser to the admin dashboard by setting
-//       window.location.href to "admin-dashboard.html"
+      // Stop the function here.
+      return;
+    }
 
-// n. After the try block, add a "catch (err)" block, to handle the case where the
-//    request itself failed (e.g. no internet connection, server unreachable)
-//
-//    Inside the catch block:
-//      - set formMessage.textContent to "Could not reach the server. Please try again."
-//      - set formMessage.className to "message error"
+    // Login succeeded, so save the authentication token.
+    localStorage.setItem("token", data.token);
+
+    // Redirect the user to the admin dashboard.
+    window.location.href = "admin-dashboard.html";
+  } catch (err) {
+    // Display an error if the server could not be reached.
+    formMessage.textContent = "Could not reach the server. Please try again.";
+
+    // Give the message the error CSS class.
+    formMessage.className = "message error";
+  }
+});
