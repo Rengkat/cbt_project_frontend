@@ -1,5 +1,5 @@
-const token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhOTU3M2NhZmExOWZjNzRkMDg5NmUwMyIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4ODE5MDE5NiwiZXhwIjoxNzg4MjA0NTk2fQ.aW8ihbwTFvN64mhKLvxbfNPMxkGUqeXSaOkzI2o9rtI";
-
+const token =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhOTU3M2NhZmExOWZjNzRkMDg5NmUwMyIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4ODQ1MTc2NywiZXhwIjoxNzg4NDY2MTY3fQ.2ynqXQvt_N2DbWFr_rYQgdd_dFVUFsTXNosBlHR7kJs";
 // This script runs on the "Manage Students" admin page.
 // It loads the list of students, and adds/edits/deletes students.
 // The same <form> on the page is reused for both "add" and "edit".
@@ -13,7 +13,6 @@ const passwordField = document.getElementById("password");
 const formTitle = document.getElementById("formTitle");
 const submitBtn = document.getElementById("submitBtn");
 const cancelEditBtn = document.getElementById("cancelEditBtn");
-
 const formMessage = document.getElementById("formMessage");
 const studentList = document.getElementById("studentList");
 
@@ -25,7 +24,8 @@ async function loadStudents() {
   try {
     // const token = localStorage.getItem("token");
 
-    const response = await fetch("https://bethesda-cbt-studet-project.onrender.com/api/admin/students",
+    const response = await fetch(
+      "https://bethesda-cbt-studet-project.onrender.com/api/admin/students",
       {
         method: "GET",
         headers: {
@@ -35,7 +35,7 @@ async function loadStudents() {
     );
 
     const students = await response.json();
-    console.log(students);
+    // console.log(students);
     if (!response.ok) {
       studentList.textContent = students.message || "Could not load students.";
       return;
@@ -54,17 +54,17 @@ async function loadStudents() {
       const item = document.createElement("div");
       item.className = "list-item";
 
-      Student name
+      // Student name
       const nameLine = document.createElement("p");
       nameLine.textContent = `Name: ${student.fullName}`;
       item.appendChild(nameLine);
 
-      Registration number
+      // Registration number
       const regLine = document.createElement("p");
       regLine.textContent = `Reg. No: ${student.regNumber}`;
       item.appendChild(regLine);
 
-      Class
+      // Class
       const classLine = document.createElement("p");
       classLine.textContent = `Class: ${student.studentClass}`;
       item.appendChild(classLine);
@@ -183,7 +183,7 @@ studentForm.addEventListener("submit", async function (e) {
     return;
   }
 
-  const token = localStorage.getItem("token");
+  // const token = localStorage.getItem("token");
 
   try {
     // ========================================================
@@ -224,6 +224,7 @@ studentForm.addEventListener("submit", async function (e) {
       }
 
       formMessage.textContent = "Student updated.";
+
       formMessage.className = "message success";
 
       // ========================================================
@@ -273,7 +274,7 @@ studentForm.addEventListener("submit", async function (e) {
 // ============================================================
 // PART 6: Delete a student
 // ============================================================
-
+/*
 async function deleteStudent(student) {
   const confirmed = confirm(
     `Delete ${student.fullName}? This cannot be undone.`,
@@ -316,5 +317,4 @@ async function deleteStudent(student) {
 
     formMessage.className = "message error";
   }
-}
-*/
+}*/
