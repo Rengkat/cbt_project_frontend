@@ -2,6 +2,9 @@
 // It lets the admin add/remove questions, add/remove options within a
 // question, mark the correct option, and submit the whole exam.
 
+// The token to be used by the admin saved to a variable 
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhOTU3M2NhZmExOWZjNzRkMDg5NmUwMyIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4ODE5MDAxNiwiZXhwIjoxNzg4MjA0NDE2fQ.N9eiPzMK_qj71i0D-2hggAHD4uf--JICOjeBVGXGRlc"
+
 // Find the container that holds all question blocks
 const questionsContainer = document.getElementById("questionsContainer");
 // Find the <template> that defines what one question block looks like
@@ -32,61 +35,64 @@ let uniqueIdCounter = 0;
 
 // Inside addOptionRow, do the following, IN THIS ORDER:
 
+function addOptionRow(block, groupName) {
 // a. Clone the option row template's content, using
 //    optionRowTemplate.content.cloneNode(true)
 //    Store the result in a variable called clone
 
+const clone = optionRowTemplate.content.cloneNode(true);
 // b. Find the row element inside the cloned content, using
 //    clone.querySelector(".optionRow")
 //    Store it in a variable called row
 
+const row = clone.querySelector(".optionRow");
 // c. Find the radio button inside row, using row.querySelector(".answerRadio")
 //    Store it in a variable called radio
 
+const radio = row.querySelector(".answerRadio");
 // d. Find the label inside row, using row.querySelector(".optionLabel")
 //    Store it in a variable called label
 
+const label = row.querySelector(".optionLabel");
 // e. Find the "Remove" button inside row, using
 //    row.querySelector(".removeOptionBtn")
 //    Store it in a variable called removeBtn
 
-// f. Increase uniqueIdCounter by 1 (uniqueIdCounter = uniqueIdCounter + 1)
+const removeBtn = row.querySelector(".removeOptionBtn");
 
+uniqueIdCounter += 1
 // g. Build a unique id string using a template literal:
 //    `${groupName}-${uniqueIdCounter}`
 //    Store it in a variable called radioId
 
-// h. Set radio.name to groupName (this groups all radios in one question together)
+const radioId = `${groupName}-${uniqueIdCounter}`
 
-// i. Set radio.id to radioId
+radio.name = groupName;
+radio.id = radioId;
 
-// j. Set the label's "for" attribute to radioId, using
-//    label.setAttribute("for", radioId)
-
+label.setAttribute("for",  radioId);
 // k. Add a "click" event listener to removeBtn.
 //    Inside that listener function, do the following:
 
-//    i. Find this question's options container, using
-//       block.querySelector(".optionsContainer")
-//       Store it in a variable called optionsContainer
+removeBtn.addEventListener("click", function(){
+const optionsContainer = block.querySelector(".optionsContainer");
 
-//    ii. Check "if (optionsContainer.querySelectorAll(".optionRow").length <= 2)"
-//        — this means only 2 options are left. If true:
-//        - call alert("A question needs at least 2 options.")
-//        - use "return" to stop here, without removing anything
+if (optionsContainer.querySelectorAll(".optionRow").length <= 2) {
+alert("Oops! A question needs at least 2 options");
+} return;
 
-//    iii. Call row.remove() to remove this option row from the page
+row.remove();
 
-//    iv. Call renumberOptions(block) — the function we define in Part 2 below
+});
 
-// l. Find this question's options container again, using
-//    block.querySelector(".optionsContainer")
-//    Store it in a variable called optionsContainer
+renumberOptions(block);
 
-// m. Add the finished row into it, using optionsContainer.appendChild(clone)
+const optionsContainer = block.querySelector(".optionsContainer");
+optionsContainer.appendChild(clone);
 
-// n. Call renumberOptions(block)
+renumberOptions(block);
 
+};
 
 // ============================================================
 // PART 2: A function that relabels all options as "Option 1", "Option 2", etc.
@@ -95,20 +101,25 @@ let uniqueIdCounter = 0;
 // 2. Define a regular function called renumberOptions that takes one
 //    parameter, called block.
 
+function renumberOptions(block) {
 // Inside renumberOptions, do the following, IN THIS ORDER:
 
 // a. Find every option row inside this question block, using
 //    block.querySelectorAll(".optionRow")
 //    Store the result in a variable called rows
 
+const rows = block.querySelectorAll(".optionRow");
 // b. Use a "for" loop, with a counter variable "i" starting at 0 and going
 //    up to (but not including) rows.length. Inside the loop:
 
+for (let i=0; i < rows.length; i++) {
 //    i. Find the label inside rows[i], using rows[i].querySelector(".optionLabel")
 //       Store it in a variable called label
 
-//    ii. Set label.textContent to `Option ${i + 1}`
-
+const label = rows[i].querySelector(".optionLabel");
+label.textContent = `Option ${i+1}`;
+}
+};
 
 // ============================================================
 // PART 3: A function that adds a brand new question block
@@ -116,51 +127,40 @@ let uniqueIdCounter = 0;
 
 // 3. Define a regular function called addQuestionBlock that takes no parameters.
 
-// Inside addQuestionBlock, do the following, IN THIS ORDER:
+function addQuestionBlock() {
+questionCount+= 1;
 
-// a. Increase questionCount by 1 (questionCount = questionCount + 1)
+const clone = questionTemplate.content.cloneNode(true);
+const block = clone.querySelector(".question-block");
+const qNumber = block.querySelector(".qNumber");
 
-// b. Clone the question template's content, using
-//    questionTemplate.content.cloneNode(true)
-//    Store the result in a variable called clone
+qNumber.textContent = questionCount;
 
-// c. Find the block element inside the cloned content, using
-//    clone.querySelector(".question-block")
-//    Store it in a variable called block
+const groupName = `answer-${Date.now()}-${questionCount}`;
 
-// d. Find the element that shows this question's number, using
-//    block.querySelector(".qNumber")
-//    Store it in a variable called qNumber
+for (let i=0; i < 4; i++) {
+addOptionRow(block, groupName);
+};
 
-// e. Set qNumber.textContent to questionCount
+const addOptionBtn = block.querySelector("addOptionBtn")
 
-// f. Build a unique radio group name using a template literal:
-//    `answer-${Date.now()}-${questionCount}`
-//    Store it in a variable called groupName
+addOptionBtn.addEventListener("click", function(){
+addOptionRow(block, groupName);
+});
 
-// g. Use a "for" loop, with a counter variable "i" starting at 0 and going
-//    up to (but not including) 4, so this runs exactly 4 times.
-//    Inside the loop, call addOptionRow(block, groupName)
-//    (this gives every new question 4 starting options)
+const removeQuestionBtn = block.querySelector(".removeQuestionBtn");
 
-// h. Find this question's "Add Another Option" button, using
-//    block.querySelector(".addOptionBtn")
-//    Store it in a variable called addOptionBtn
+removeQuestionBtn.addEventListener("click", function(){
+block.remove();
 
-// i. Add a "click" event listener to addOptionBtn.
-//    Inside that listener function, call addOptionRow(block, groupName)
+renumberOptions()
+});
 
-// j. Find this question's "Remove This Question" button, using
-//    block.querySelector(".removeQuestionBtn")
-//    Store it in a variable called removeQuestionBtn
+questionsContainer.appendChild(clone);
+};
 
-// k. Add a "click" event listener to removeQuestionBtn.
-//    Inside that listener function:
-//      - call block.remove()
-//      - call renumberQuestions() (the function we define in Part 4 below)
 
-// l. Add the finished question block into the page, using
-//    questionsContainer.appendChild(clone)
+
 
 
 // ============================================================
@@ -367,3 +367,5 @@ let uniqueIdCounter = 0;
 //    Inside it:
 //      - set formMessage.textContent to "Could not reach the server. Please try again."
 //      - set formMessage.className to "message error"
+
+addOptionRow(a, b)
