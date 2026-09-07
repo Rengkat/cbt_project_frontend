@@ -184,12 +184,15 @@ titleLine.textContent = `Title: ${exam.title}`;
 // ============================================================
 
 // 2. Add a "click" event listener to logoutBtn.
-//    Inside that listener function:
-//      - call localStorage.removeItem("token")
-//      - redirect the browser by setting window.location.href to
-//        "student-login.html"
+logoutBtn.addEventListener = ("click", function (){
+    //    Inside that listener function:
+    //      - call localStorage.removeItem("token")
+    //      - redirect the browser by setting window.location.href to
+    //        "student-login.html"
+    localStorage.removeItem("token")
+    window.location.href = "student-login.html";
 
-
+})
 // ============================================================
 // PART 3: Load the exams as soon as the page opens
 // ============================================================
