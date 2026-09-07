@@ -26,7 +26,7 @@ const formMessage = document.getElementById("formMessage");
 //    extra whitespace from the start/end using .trim(), and store the result
 //    in a variable called regNumber
 
-// e. Find the password input using document.getElementById with the id "password"
+// e. Find the password input using document.getElementById with the id "password"lo
 //    Store it in a variable called passwordInput
 
 // f. Read the value typed into passwordInput (passwordInput.value) and store it
