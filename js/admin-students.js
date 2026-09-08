@@ -1,5 +1,5 @@
 const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhOTU3M2NhZmExOWZjNzRkMDg5NmUwMyIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4ODQ1MTc2NywiZXhwIjoxNzg4NDY2MTY3fQ.2ynqXQvt_N2DbWFr_rYQgdd_dFVUFsTXNosBlHR7kJs";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhOTU3M2NhZmExOWZjNzRkMDg5NmUwMyIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4ODg4Mzg4OCwiZXhwIjoxNzg4ODk4Mjg4fQ.I5zD5AdxzGDyl1EIBfJxCiVSdpIcyV5A6Rvm1ct9Y8M";
 // This script runs on the "Manage Students" admin page.
 // It loads the list of students, and adds/edits/deletes students.
 // The same <form> on the page is reused for both "add" and "edit".
@@ -274,7 +274,6 @@ studentForm.addEventListener("submit", async function (e) {
 // ============================================================
 // PART 6: Delete a student
 // ============================================================
-/*
 async function deleteStudent(student) {
   const confirmed = confirm(
     `Delete ${student.fullName}? This cannot be undone.`,
@@ -284,7 +283,7 @@ async function deleteStudent(student) {
     return;
   }
 
-  const token = localStorage.getItem("token");
+  // const token = localStorage.getItem("token");
 
   try {
     const response = await fetch(
@@ -317,4 +316,4 @@ async function deleteStudent(student) {
 
     formMessage.className = "message error";
   }
-}*/
+} 
